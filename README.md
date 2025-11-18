@@ -1,6 +1,6 @@
 # Drone Review Analysis with Ollama
 
-A comprehensive tool for analyzing drone product reviews using multiple Ollama language models. This system performs sentiment analysis, topic extraction, and technical issue identification from Russian drone reviews.
+This code uses qwen2.5coder LLM models of 3 different sizes to analyze reviews of drones.
 
 ## Features
 
