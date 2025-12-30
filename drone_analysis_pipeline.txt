@@ -1,0 +1,90 @@
+
+    ┌─────────────────────────────────────────────────────────────────────────────┐
+    │                    DRONE REVIEWS ANALYSIS PIPELINE                          │
+    └─────────────────────────────────────────────────────────────────────────────┘
+
+                                    ┌──────────────┐
+                                    │   Input      │
+                                    │(reviews.json)│ 
+                                    └──────┬───────┘
+                                           ▼
+                                  ┌─────────────────┐
+                                  │Load & Preprocess│
+                                  │ • JSON parsing  │
+                                  │ • Error handling│
+                                  └────────┬────────┘
+                                           ▼
+                         ┌─────────────────────────────────────┐
+                         │        Create Structured Prompts    │
+                         │  • Russian language template        │
+                         │  • JSON output format specification │
+                         └────────────────┬────────────────────┘
+                                          ▼
+                         ┌─────────────────────────────────────┐
+                         │       Call Ollama API (3 Models)    │
+                         ├─────────────────────────────────────┤
+                         │  Models:                            │
+                         │  • qwen2.5-coder:7b                 │
+                         │  • qwen2.5-coder:3b                 │
+                         │  • qwen2.5-coder:1.5b               │
+                         └────────────────┬────────────────────┘
+                                          ▼
+                         ┌─────────────────────────────────────┐
+                         │        Parse & Validate Responses   │
+                         │  • Extract JSON from output         │
+                         │  • Validate required fields         │
+                         │  • Apply fallback for errors        │
+                         └────────────────┬────────────────────┘
+                                          ▼
+                         ┌─────────────────────────────────────┐
+                         │        Batch Processing             │
+                         │  • Process all reviews              │
+                         │  • Rate limiting (1s delay)         │
+                         │  • Collect results                  │
+                         └────────────────┬────────────────────┘
+                                          ▼
+    ┌─────────────────────────────────────────────────────────────────────────────┐
+    │                         MODEL EVALUATION METRICS                            │
+    ├─────────────────────────────────────────────────────────────────────────────┤
+    │                                                                             │
+    │  ┌────────────┐  ┌──────────────┐  ┌────────────────┐  ┌──────────────┐     │
+    │  │ Sentiment  │  │ Technical    │  │ Rating         │  │ Response     │     │
+    │  │ Agreement  │  │ Terms        │  │ Consistency    │  │ Quality      │     │
+    │  │ (%)        │  │ (avg/review) │  │ (variance)     │  │ (0-1 score)  │     │
+    │  └────────────┘  └──────────────┘  └────────────────┘  └──────────────┘     │
+    │                                                                             │
+    └─────────────────────────────────────────────────────────────────────────────┘
+                                          ▼
+                         ┌─────────────────────────────────────┐
+                         │        Generate Output              │
+                         ├─────────────────────────────────────┤
+                         │  • JSON file with full results      │
+                         │  • CSV comparison table             │
+                         │  • Console summary report           │
+                         │  • Timestamped filenames            │
+                         └─────────────────────────────────────┘
+
+    ┌─────────────────────────────────────────────────────────────────────────────┐
+    │                         KEY COMPONENTS                                      │
+    ├─────────────────────────────────────────────────────────────────────────────┤
+    │                                                                             │
+    │  OllamaDroneReviewAnalyzer Class:                                           │
+    │    ├── Manages review loading and preprocessing                             │
+    │    ├── Creates Russian-language prompts                                     │
+    │    ├── Handles API communication with retry logic                           │
+    │    └── Processes reviews in batches                                         │
+    │                                                                             │
+    │  ModelEvaluator Class:                                                      │
+    │    ├── Calculates inter-model agreement                                     │
+    │    ├── Evaluates technical term recognition                                 │
+    │    ├── Measures rating consistency                                          │
+    │    └── Scores overall response quality                                      │
+    │                                                                             │
+    │  Main Function:                                                             │
+    │    ├── Coordinates the entire pipeline                                      │
+    │    ├── Handles fallback with sample reviews                                 │
+    │    ├── Manages output generation                                            │
+    │    └── Provides console feedback                                            │
+    │                                                                             │
+    └─────────────────────────────────────────────────────────────────────────────┘
+    
